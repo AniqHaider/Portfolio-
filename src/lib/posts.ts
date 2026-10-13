@@ -25,7 +25,7 @@ export const posts: Post[] = [
     slug: "cardify",
     title: "Cardify: restyling a storefront's product cards without touching its code",
     summary:
-      "A drop-in app for the Ratio platform. A merchant flips one switch and the storefront's product cards are replaced by one of five designs, safely and with no reload.",
+      "A drop-in app for the Ratio platform, used in production. A merchant flips one switch and the storefront's product cards are replaced by one of five designs, safely and with no reload.",
     tag: "Platform app",
     readTime: "5 min read",
     stack: ["Lit", "Fastify", "MySQL", "React", "Playwright"],
@@ -85,7 +85,7 @@ export const posts: Post[] = [
       },
       {
         t: "callout",
-        text: "Status: a working prototype with unit tests and a headless-Chromium end-to-end suite. Production hosting and real per-merchant authentication are the next steps.",
+        text: "Status: used in production on the Ratio platform, backed by unit tests and a headless-Chromium end-to-end suite.",
       },
     ],
   },
