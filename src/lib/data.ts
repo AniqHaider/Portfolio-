@@ -1,19 +1,22 @@
 export const profile = {
   name: "Aniq Haider",
-  role: "Full Stack Software Engineer",
+  role: "Software Engineer",
   location: "Indore, India",
   email: "aniqhaider@gmail.com",
+  phone: "+91 83188 42530",
+  phoneHref: "tel:+918318842530",
   github: "https://github.com/AniqHaider",
-  headline: ["Full-stack engineer shipping commerce platforms with", "AI"],
+  linkedin: "https://linkedin.com/in/aniq-haider-71965b24b",
+  headline: ["Software engineer building fast, scalable products with", "AI"],
   tagline:
-    "I'm Aniq Haider. I build storefronts, APIs and AI pipelines that scale.",
+    "I'm Aniq Haider. I design and ship full-stack web apps, APIs and AI-powered developer tools.",
   summary:
-    "Full-stack software engineer (3+ years) at a product-based company, shipping production commerce platforms, AI-integrated fintech tools and large-scale document-processing systems. I drive the frontend and own cross-stack features on OpenStore, a Shopify-replacement commerce platform for 7+ D2C brands, including Shopify data-migration APIs and a custom order-confirmation package. On the backend I've built AI-integrated PDF-processing APIs, cross-stack SSO and MySQL schemas, and I own AWS and Docker deployments.",
+    "Software engineer (3+ years) at a product-based company, shipping production web platforms, AI-integrated fintech tools and large-scale document-processing systems. I work across the stack: React and Next.js on the frontend; Node.js, NestJS, Python and FastAPI services; MySQL schema design; and AWS and Docker deployments. Lately I build AI-augmented engineering tooling, including agent pipelines, MCP servers and internal platforms, that compress hours of work into a single prompt.",
 };
 
 export const stats = [
   { value: "3+", label: "Years shipping" },
-  { value: "7+", label: "Merchant storefronts" },
+  { value: "7+", label: "Storefronts shipped" },
   { value: "SDE 2", label: "Promoted 3 times" },
   { value: "100%", label: "Lighthouse scores" },
 ];
@@ -27,7 +30,7 @@ export const experience = [
     projects: [
       {
         name: "OpenStore",
-        tag: "Shopify-replacement commerce platform",
+        tag: "Multi-tenant commerce platform",
         blurb:
           "Multi-tenant Next.js storefront platform on a custom commerce stack, built as a Shopify alternative for D2C brands.",
         points: [
