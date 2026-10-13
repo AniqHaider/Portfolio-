@@ -29,7 +29,7 @@ export const experience = [
     progression: ["SDE Intern", "Associate SDE", "SDE 1", "SDE 2"],
     projects: [
       {
-        name: "OpenStore",
+        name: "Ratio",
         tag: "Multi-tenant commerce platform",
         blurb:
           "Multi-tenant Next.js storefront platform on a custom commerce stack, built as a Shopify alternative for D2C brands.",
@@ -40,6 +40,18 @@ export const experience = [
           "Designed a custom order-confirmation package end to end (FE + BE) with post-purchase upsell and re-buy flows.",
           "Designed a multi-phase AI agent pipeline that pixel-perfect-clones live storefronts into Next.js, cutting new-section build time from days to hours.",
           "Shipped SEO infrastructure (dynamic sitemap, robots, canonical URLs, Google Merchant feed) and a reusable customer-reviews widget.",
+        ],
+      },
+      {
+        name: "Cardify",
+        tag: "Storefront app for Ratio",
+        blurb:
+          "A drop-in app that swaps a storefront's product cards for alternative designs from a single admin switch, with no change to the store's own data.",
+        points: [
+          "Built the full stack: a Fastify + MySQL settings API, a Lit web-component SDK, and a React admin with live previews of five card designs.",
+          "Overlay engine hides native cards (never removes them) and delegates clicks and quick-buy back to the host, so the store's own routing and analytics keep working.",
+          "Fails safe: if the backend is down or the bundle is blocked, the native cards stay exactly as they were. The loader is 0.5 KB gzipped and the widget about 10 KB.",
+          "Covered by unit tests and a headless-Chromium end-to-end regression suite.",
         ],
       },
       {
@@ -90,7 +102,7 @@ export const skills = [
   },
   {
     title: "Commerce",
-    items: ["OpenStore", "Custom checkout", "BFF proxy patterns", "Shopify migrations", "ISR caching", "SEO"],
+    items: ["Ratio", "Custom checkout", "BFF proxy patterns", "Shopify migrations", "ISR caching", "SEO"],
   },
   {
     title: "AI-augmented dev",

@@ -22,6 +22,74 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    slug: "cardify",
+    title: "Cardify: restyling a storefront's product cards without touching its code",
+    summary:
+      "A drop-in app for the Ratio platform. A merchant flips one switch and the storefront's product cards are replaced by one of five designs, safely and with no reload.",
+    tag: "Platform app",
+    readTime: "5 min read",
+    stack: ["Lit", "Fastify", "MySQL", "React", "Playwright"],
+    blocks: [
+      {
+        t: "p",
+        text: "Merchants on a commerce platform often want a different look for their product cards, but changing card markup means touching every widget that renders one: collection grids, carousels, search results and related products. I built Cardify as an app that does it from the outside. The merchant picks a design in an admin screen, and the storefront's own cards are swapped live.",
+      },
+      {
+        t: "diagram",
+        title: "How a card gets replaced",
+        caption: "The storefront only exposes a few data attributes. Everything else is loaded on demand.",
+        lanes: [
+          {
+            title: "Setup",
+            nodes: [
+              { label: "Merchant admin", sub: "React + Vite. Switch on, pick a design and colours", tone: "yellow" },
+              { label: "Settings API", sub: "Fastify + MySQL. Admin writes are key-protected", tone: "blue" },
+              { label: "Public config", sub: "Read-only endpoint the storefront loader calls", tone: "green" },
+            ],
+          },
+          {
+            title: "On the storefront",
+            nodes: [
+              { label: "Tiny loader", sub: "0.5 KB gzipped. Fetches the config", tone: "purple" },
+              { label: "Config says off?", sub: "Do nothing. Native cards stay", tone: "gray" },
+              { label: "Load widget", sub: "About 10 KB gzipped, imported lazily", tone: "blue" },
+              { label: "Overlay", sub: "Hide each native card, mount a Cardify card in its cell", tone: "green" },
+            ],
+          },
+          {
+            title: "When a shopper clicks",
+            nodes: [
+              { label: "Cardify card", sub: "Click or quick-buy", tone: "yellow" },
+              { label: "Hidden native link", sub: "The click is delegated to the store's own element", tone: "pink" },
+              { label: "Store behaviour runs", sub: "Routing, quick-buy popup and analytics, unchanged", tone: "green" },
+            ],
+          },
+        ],
+      },
+      { t: "h", text: "Design choices that matter" },
+      {
+        t: "ul",
+        items: [
+          "Purely cosmetic. A card uses exactly the data the native card already renders, so there is no new data contract for the storefront to maintain.",
+          "Native cards are hidden, never removed. The overlay mounts inside the same cell, so the store's grid and carousel layout is untouched, and a MutationObserver picks up cards that appear later.",
+          "Behaviour is delegated back to the host. Clicking a Cardify card clicks the hidden native link, so the store's own routing, popups and tracking keep running.",
+          "It fails safe. If the backend is down, the config call errors or the bundle is blocked, the shopper simply sees the original cards.",
+          "No polling. The config refreshes on page load and when the tab regains focus. A timer would make every visitor's tab hit the backend.",
+          "The server refuses to start without an admin key, so a missing setting can never mean an open admin.",
+        ],
+      },
+      { t: "h", text: "Five designs, one structure" },
+      {
+        t: "p",
+        text: "Classic, minimal, overlay, hover-reveal and editorial all share one DOM structure and differ only in CSS. That is why click and quick-buy bridging works for every design for free. Merchants can tune accent, text and background colours, corner radius, image shape and toggles for the badge, quick-buy, rating and compare-at price, all validated with a shared zod schema. Adding a sixth design is a registry entry plus one CSS block.",
+      },
+      {
+        t: "callout",
+        text: "Status: a working prototype with unit tests and a headless-Chromium end-to-end suite. Production hosting and real per-merchant authentication are the next steps.",
+      },
+    ],
+  },
+  {
     slug: "agent-cloning-pipeline",
     title: "A multi-agent pipeline that clones live sites into production components",
     summary:
