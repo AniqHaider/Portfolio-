@@ -44,14 +44,14 @@ export const experience = [
       },
       {
         name: "Cardify",
-        tag: "Live in production · Ratio app",
+        tag: "Live on 16 storefronts · Ratio app",
         blurb:
           "A drop-in app that swaps a storefront's product cards for alternative designs from a single admin switch, with no change to the store's own data.",
         points: [
           "Built the full stack: a Fastify + MySQL settings API, a Lit web-component SDK, and a React admin with live previews of five card designs.",
           "Overlay engine hides native cards (never removes them) and delegates clicks and quick-buy back to the host, so the store's own routing and analytics keep working.",
           "Fails safe: if the backend is down or the bundle is blocked, the native cards stay exactly as they were. The loader is 0.5 KB gzipped and the widget about 10 KB.",
-          "Used in production, and covered by unit tests plus a headless-Chromium end-to-end regression suite.",
+          "Live in production on 16 storefronts, and covered by unit tests plus a headless-Chromium end-to-end regression suite.",
         ],
       },
       {
