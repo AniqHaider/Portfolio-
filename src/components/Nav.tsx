@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 
 const links = [
-  { href: "#experience", label: "Experience" },
-  { href: "#skills", label: "Skills" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#writing", label: "Writing" },
+  { href: "/#skills", label: "Skills" },
 ];
 
 export default function Nav() {
@@ -30,7 +31,7 @@ export default function Nav() {
         aria-label="Primary"
         className="flex h-[70px] flex-1 items-center justify-between rounded-full border border-line bg-surface/80 px-5 shadow-lg backdrop-blur-xl md:px-8"
       >
-        <a href="#top" className="flex items-center gap-3" data-testid="nav-logo">
+        <a href="/#top" className="flex items-center gap-3" data-testid="nav-logo">
           <span className="grid h-9 w-9 place-items-center rounded-full bg-accent-fill text-sm font-extrabold text-white">
             AH
           </span>
@@ -51,7 +52,7 @@ export default function Nav() {
             </a>
           ))}
           <a
-            href="#contact"
+            href="/#contact"
             data-testid="nav-contact"
             className="inline-flex h-11 items-center rounded-full bg-accent-fill px-5 text-sm font-semibold text-white transition hover:brightness-110"
           >

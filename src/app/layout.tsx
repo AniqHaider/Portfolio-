@@ -9,16 +9,16 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "Aniq Haider · Full-stack engineer shipping commerce platforms with AI",
+  title: "Aniq Haider · Software engineer building scalable products with AI",
   description:
-    "Aniq Haider is a full-stack software engineer building production commerce platforms, AI-integrated fintech tools and document-processing systems with React, Next.js, Node.js and Python.",
+    "Aniq Haider is a software engineer building production web platforms, AI-integrated fintech tools and developer tooling with React, Next.js, Node.js and Python.",
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-haider.vercel.app",
   ),
   openGraph: {
-    title: "Aniq Haider · Full Stack Software Engineer",
+    title: "Aniq Haider · Software Engineer",
     description:
-      "Storefronts, APIs and AI pipelines that scale. React · Next.js · Node.js · Python · AWS.",
+      "Full-stack web apps, APIs and AI-powered developer tools. React · Next.js · Node.js · Python · AWS.",
     type: "website",
   },
 };

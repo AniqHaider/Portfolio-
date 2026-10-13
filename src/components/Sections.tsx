@@ -1,4 +1,6 @@
+import Link from "next/link";
 import Reveal from "./Reveal";
+import { posts } from "@/lib/posts";
 import { education, experience, profile, skills, stats } from "@/lib/data";
 
 function Shell({
@@ -47,7 +49,7 @@ export function About() {
 
 export function Experience() {
   return (
-    <Shell id="experience" eyebrow="Experience" title="Production work across commerce, fintech and documents.">
+    <Shell id="experience" eyebrow="Experience" title="Production work across web platforms, fintech and documents.">
       {experience.map((job) => (
         <div key={job.company}>
           <Reveal>
@@ -106,6 +108,43 @@ export function Experience() {
   );
 }
 
+export function Writing() {
+  return (
+    <Shell id="writing" eyebrow="Writing" title="Notes on the tools I build.">
+      <div className="grid gap-5 md:grid-cols-3">
+        {posts.map((p, i) => (
+          <Reveal key={p.slug} delay={i * 0.08}>
+            <Link
+              href={`/blog/${p.slug}`}
+              data-testid={`blog-tile-${p.slug}`}
+              className="group flex h-full flex-col rounded-3xl border border-line bg-surface p-6 transition hover:-translate-y-1 hover:border-accent/60"
+            >
+              <span className="mb-4 w-fit rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
+                {p.tag}
+              </span>
+              <h3 className="text-xl font-semibold leading-snug tracking-tight">{p.title}</h3>
+              <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">{p.summary}</p>
+              <div className="mt-5 flex flex-wrap gap-1.5">
+                {p.stack.slice(0, 3).map((t) => (
+                  <span key={t} className="rounded-full border border-line bg-surface-2 px-2.5 py-0.5 text-xs">
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-accent">
+                {p.readTime} · Read{" "}
+                <span aria-hidden className="transition group-hover:translate-x-1">
+                  →
+                </span>
+              </span>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
+    </Shell>
+  );
+}
+
 export function Skills() {
   return (
     <Shell id="skills" eyebrow="Skills" title="A full-stack toolkit, extended with AI-augmented workflows.">
@@ -157,7 +196,7 @@ export function Contact() {
             Let&apos;s build something that scales.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-muted">
-            Open to full-stack and frontend-lead roles, commerce platforms and AI-integrated products.
+            Open to software engineering roles, full-stack and frontend-lead work, and AI-integrated products.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <a
@@ -168,6 +207,15 @@ export function Contact() {
               {profile.email}
             </a>
             <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noreferrer"
+              data-testid="contact-linkedin"
+              className="inline-flex h-12 items-center rounded-full border border-line bg-surface-2 px-7 font-semibold transition hover:border-accent"
+            >
+              LinkedIn
+            </a>
+            <a
               href={profile.github}
               target="_blank"
               rel="noreferrer"
@@ -175,6 +223,13 @@ export function Contact() {
               className="inline-flex h-12 items-center rounded-full border border-line bg-surface-2 px-7 font-semibold transition hover:border-accent"
             >
               GitHub
+            </a>
+            <a
+              href={profile.phoneHref}
+              data-testid="contact-phone"
+              className="inline-flex h-12 items-center rounded-full border border-line bg-surface-2 px-7 font-semibold transition hover:border-accent"
+            >
+              {profile.phone}
             </a>
           </div>
         </div>

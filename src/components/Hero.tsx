@@ -23,7 +23,7 @@ export default function Hero() {
         <span className="absolute inset-0 rounded-full border border-line bg-surface-2 p-3 shadow-2xl">
           <span className="relative block h-full w-full overflow-hidden rounded-full bg-surface">
             <Image
-              src="/aniq.jpg"
+              src="/portrait.jpg"
               alt="Portrait of Aniq Haider"
               fill
               priority
