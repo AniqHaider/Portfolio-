@@ -1,7 +1,7 @@
 export const profile = {
   name: "Aniq Haider",
   role: "Software Engineer",
-  location: "Indore, India",
+  location: "Gurugram, India",
   email: "aniqhaider@gmail.com",
   phone: "+91 83188 42530",
   phoneHref: "tel:+918318842530",
