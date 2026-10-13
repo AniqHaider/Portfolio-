@@ -111,7 +111,7 @@ export function Experience() {
 export function Writing() {
   return (
     <Shell id="writing" eyebrow="Writing" title="Notes on the tools I build.">
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         {posts.map((p, i) => (
           <Reveal key={p.slug} delay={i * 0.08}>
             <Link
