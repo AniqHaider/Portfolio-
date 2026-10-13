@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   description:
     "Aniq Haider is a full-stack software engineer building production commerce platforms, AI-integrated fintech tools and document-processing systems with React, Next.js, Node.js and Python.",
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-portfolio.vercel.app",
+    process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-haider.vercel.app",
   ),
   openGraph: {
     title: "Aniq Haider · Full Stack Software Engineer",

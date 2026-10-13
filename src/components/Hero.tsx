@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { profile } from "@/lib/data";
 
@@ -20,8 +21,15 @@ export default function Hero() {
         <span className="absolute inset-0 translate-y-5 scale-[0.94] rounded-full border border-line bg-surface opacity-40" />
         <span className="absolute inset-0 translate-y-2.5 scale-[0.97] rounded-full border border-line bg-surface opacity-70" />
         <span className="absolute inset-0 rounded-full border border-line bg-surface-2 p-3 shadow-2xl">
-          <span className="grid h-full w-full place-items-center rounded-full bg-gradient-to-br from-accent-fill via-[oklch(40%_0.113_250)] to-[oklch(22%_0.05_250)] text-[clamp(3rem,9vw,6rem)] font-extrabold tracking-tight text-white">
-            AH
+          <span className="relative block h-full w-full overflow-hidden rounded-full bg-surface">
+            <Image
+              src="/aniq.jpg"
+              alt="Portrait of Aniq Haider"
+              fill
+              priority
+              sizes="(max-width: 767px) 58vw, 30svh"
+              className="object-cover"
+            />
           </span>
         </span>
       </motion.div>
