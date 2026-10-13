@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+:root,
+[data-theme="dark"] {
+  --bg: oklch(8% 0 0);
+  --surface: oklch(17% 0 0);
+  --surface-2: oklch(22% 0 0);
+  --text: oklch(98% 0 0);
+  --muted: oklch(70% 0 0);
+  --border: oklch(100% 0 0 / 0.14);
+  --accent: oklch(64% 0.145 246);
+  --accent-fill: oklch(52% 0.14 246);
+  --accent-soft: oklch(69% 0.136 246 / 0.18);
+}
+
+[data-theme="light"] {
+  --bg: oklch(98.5% 0 0);
+  --surface: oklch(100% 0 0);
+  --surface-2: oklch(95% 0 0);
+  --text: oklch(18% 0 0);
+  --muted: oklch(46% 0 0);
+  --border: oklch(0% 0 0 / 0.1);
+  --accent: oklch(52% 0.14 246);
+  --accent-fill: oklch(52% 0.14 246);
+  --accent-soft: oklch(69% 0.136 246 / 0.12);
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-fg: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light dark;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+::selection {
+  background: var(--accent-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
