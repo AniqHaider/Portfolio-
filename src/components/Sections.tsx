@@ -207,6 +207,17 @@ export function Contact() {
               {profile.email}
             </a>
             <a
+              href="/Aniq-Haider-Resume.pdf"
+              download="Aniq-Haider-Resume.pdf"
+              data-testid="contact-resume"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-accent bg-accent-soft px-7 font-semibold text-accent transition hover:bg-accent-fill hover:text-white"
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 3v12M7 10l5 5 5-5M4 20h16" />
+              </svg>
+              Download resume
+            </a>
+            <a
               href={profile.linkedin}
               target="_blank"
               rel="noreferrer"
