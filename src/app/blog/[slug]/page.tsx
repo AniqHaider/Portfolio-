@@ -19,9 +19,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} · Aniq Haider`,
     description: post.summary,
     alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: { title: post.title, description: post.summary, type: "article" },
+    openGraph: {
+      title: post.title,
+      description: post.summary,
+      type: "article",
+      url: `/blog/${post.slug}`,
+      publishedTime: post.date,
+      authors: ["Aniq Haider"],
+      tags: post.stack,
+    },
+    twitter: { card: "summary_large_image", title: post.title, description: post.summary },
   };
 }
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-haider.vercel.app";
 
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
@@ -30,8 +41,24 @@ export default async function BlogPost({ params }: Props) {
   const idx = posts.findIndex((p) => p.slug === slug);
   const next = posts[(idx + 1) % posts.length];
 
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.summary,
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: `${siteUrl}/blog/${post.slug}`,
+    keywords: post.stack.join(", "),
+    author: { "@type": "Person", name: "Aniq Haider", url: siteUrl },
+  };
+
   return (
     <>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+    />
     <Nav />
     <main id="main" className="mx-auto w-full max-w-4xl px-6 pb-24 pt-32 md:px-8">
       <Link

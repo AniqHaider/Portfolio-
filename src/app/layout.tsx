@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
+import { profile } from "@/lib/data";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -15,12 +16,37 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-haider.vercel.app",
   ),
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Aniq Haider · Software Engineer",
     description:
       "Full-stack web apps, APIs and AI-powered developer tools. React · Next.js · Node.js · Python · AWS.",
     type: "website",
+    url: "/",
+    siteName: "Aniq Haider",
+    locale: "en_IN",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aniq Haider · Software Engineer",
+    description:
+      "Full-stack web apps, APIs and AI-powered developer tools. React · Next.js · Node.js · Python · AWS.",
+  },
+};
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://aniq-haider.vercel.app";
+
+// Person structured data: ties the site to the GitHub and LinkedIn profiles so search engines treat them as one entity.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: profile.name,
+  jobTitle: profile.role,
+  url: siteUrl,
+  image: `${siteUrl}/portrait.jpg`,
+  address: { "@type": "PostalAddress", addressLocality: "Gurugram", addressCountry: "IN" },
+  sameAs: [profile.github, profile.linkedin],
+  knowsAbout: ["React", "Next.js", "Node.js", "Python", "AWS", "Developer tooling"],
 };
 
 const themeScript = `(function(){try{var t=localStorage.getItem("theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:m)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();`;
@@ -33,7 +59,13 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body>{children}</body>
+      <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
