@@ -18,6 +18,7 @@ export type Post = {
   tag: string;
   readTime: string;
   stack: string[];
+  links?: { label: string; href: string }[];
   blocks: Block[];
 };
 
@@ -31,6 +32,7 @@ export const posts: Post[] = [
     tag: "Platform app",
     readTime: "5 min read",
     stack: ["Lit", "Fastify", "MySQL", "React", "Playwright"],
+    links: [{ label: "Source code (lite version)", href: "https://github.com/AniqHaider/cardify-lite" }],
     blocks: [
       {
         t: "p",
@@ -100,6 +102,7 @@ export const posts: Post[] = [
     tag: "AI engineering",
     readTime: "5 min read",
     stack: ["Claude Code", "Subagents", "Playwright", "Figma MCP", "Next.js"],
+    links: [{ label: "Source code (generic version)", href: "https://github.com/AniqHaider/site-clone-agents" }],
     blocks: [
       {
         t: "p",
