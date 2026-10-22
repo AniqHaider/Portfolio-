@@ -84,6 +84,22 @@ export default async function BlogPost({ params }: Props) {
               </li>
             ))}
           </ul>
+          {post.links && (
+            <p className="mt-5 flex flex-wrap gap-3">
+              {post.links.map((l) => (
+                <a
+                  key={l.href}
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="blog-source-link"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-4 py-2 text-sm font-semibold text-white hover:opacity-90"
+                >
+                  {l.label} <span aria-hidden>↗</span>
+                </a>
+              ))}
+            </p>
+          )}
         </header>
 
         <div className="space-y-5 text-[1.05rem] leading-relaxed">
