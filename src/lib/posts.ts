@@ -12,6 +12,7 @@ export type Block =
 
 export type Post = {
   slug: string;
+  date: string;
   title: string;
   summary: string;
   tag: string;
@@ -23,6 +24,7 @@ export type Post = {
 export const posts: Post[] = [
   {
     slug: "cardify",
+    date: "2026-10-13",
     title: "Cardify: restyling a storefront's product cards without touching its code",
     summary:
       "A drop-in app for the Ratio platform, live on 16 storefronts. A merchant flips one switch and the storefront's product cards are replaced by one of five designs, safely and with no reload.",
@@ -91,6 +93,7 @@ export const posts: Post[] = [
   },
   {
     slug: "agent-cloning-pipeline",
+    date: "2026-10-13",
     title: "A multi-agent pipeline that clones live sites into production components",
     summary:
       "Five specialised agents turn a URL or a Figma frame into reviewed, build-verified UI, one section at a time, and learn from every run.",
@@ -159,6 +162,7 @@ export const posts: Post[] = [
   },
   {
     slug: "github-repo-mcp",
+    date: "2026-10-13",
     title: "github-repo-mcp: letting an AI explore any GitHub repo without cloning it by hand",
     summary:
       "A small MCP server that clones, maps, searches and reads any repository on demand, with a local cache and a symbol map built with tree-sitter.",
@@ -219,6 +223,7 @@ export const posts: Post[] = [
   },
   {
     slug: "editor-update-system",
+    date: "2026-10-13",
     title: "An editor update system with a human approval gate on every write",
     summary:
       "A safe workflow for reading and changing a visual editor's theme and template data through its APIs, with confirmation before each mutation and a backup before each delete.",
