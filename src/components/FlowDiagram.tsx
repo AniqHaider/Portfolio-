@@ -1,5 +1,7 @@
-import { Fragment } from "react";
-import type { FlowLane, Tone } from "@/lib/posts";
+"use client";
+
+import { Fragment, useId, useRef, useState } from "react";
+import type { FlowLane, PostVideo, Tone } from "@/lib/posts";
 
 // FigJam-style sticky-note palette. Pastel backgrounds with dark text stay legible in both themes.
 const tones: Record<Tone, string> = {
@@ -21,25 +23,89 @@ function Arrow() {
   );
 }
 
+type View = "diagram" | "animation";
+
 export default function FlowDiagram({
   title,
   caption,
   lanes,
+  video,
 }: {
   title: string;
   caption?: string;
   lanes: FlowLane[];
+  video?: PostVideo;
 }) {
+  const id = useId();
+  const [view, setView] = useState<View>("diagram");
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const tabs: { id: View; label: string }[] = video
+    ? [
+        { id: "diagram", label: "Diagram" },
+        { id: "animation", label: "Animation" },
+      ]
+    : [];
+
+  const choose = (next: View) => {
+    setView(next);
+    if (next === "diagram") videoRef.current?.pause();
+  };
+
+  // Arrow keys move between the two tabs, as a tablist should.
+  const onKey = (e: React.KeyboardEvent) => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft" && e.key !== "Home" && e.key !== "End") return;
+    e.preventDefault();
+    const next: View = e.key === "ArrowLeft" || e.key === "Home" ? "diagram" : "animation";
+    choose(next);
+    document.getElementById(`${id}-tab-${next}`)?.focus();
+  };
+
   return (
     <figure
       className="my-10 rounded-3xl border border-line bg-surface p-5 md:p-8"
       data-testid="flow-diagram"
     >
-      <figcaption className="mb-6">
-        <span className="block text-sm font-semibold uppercase tracking-[0.18em] text-accent">{title}</span>
-        {caption && <span className="mt-1 block text-sm text-muted">{caption}</span>}
+      <figcaption className="mb-6 flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+        <span className="min-w-0 flex-[1_1_18rem]">
+          <span className="block text-sm font-semibold uppercase tracking-[0.18em] text-accent">{title}</span>
+          {caption && <span className="mt-1 block text-sm text-muted">{caption}</span>}
+        </span>
+        {video && (
+          <span
+            role="tablist"
+            aria-label={`${title}: choose a view`}
+            onKeyDown={onKey}
+            className="inline-flex shrink-0 rounded-full border border-line bg-surface-2 p-1"
+          >
+            {tabs.map((t) => (
+              <button
+                key={t.id}
+                id={`${id}-tab-${t.id}`}
+                role="tab"
+                type="button"
+                aria-selected={view === t.id}
+                aria-controls={`${id}-panel-${t.id}`}
+                tabIndex={view === t.id ? 0 : -1}
+                data-testid={`flow-tab-${t.id}`}
+                onClick={() => choose(t.id)}
+                className={`min-h-10 rounded-full px-4 text-sm font-semibold transition-colors ${
+                  view === t.id ? "bg-accent-fill text-white" : "text-muted hover:text-fg"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
+          </span>
+        )}
       </figcaption>
-      <div className="space-y-7">
+
+      <div
+        id={`${id}-panel-diagram`}
+        role={video ? "tabpanel" : undefined}
+        aria-labelledby={video ? `${id}-tab-diagram` : undefined}
+        hidden={view !== "diagram"}
+        className="space-y-7"
+      >
         {lanes.map((lane, li) => (
           <div key={li}>
             {lane.title && (
@@ -68,6 +134,35 @@ export default function FlowDiagram({
           </div>
         ))}
       </div>
+
+      {video && (
+        <div
+          id={`${id}-panel-animation`}
+          role="tabpanel"
+          aria-labelledby={`${id}-tab-animation`}
+          hidden={view !== "animation"}
+        >
+          {/* The file is only requested once the Animation tab is opened. */}
+          {view === "animation" && (
+            <video
+              ref={videoRef}
+              data-testid="flow-video"
+              className="aspect-video w-full rounded-2xl border border-line bg-black"
+              src={video.src}
+              poster={video.poster}
+              controls
+              playsInline
+              muted
+              autoPlay
+              loop
+              preload="metadata"
+              aria-label={video.label}
+            >
+              Your browser can't play this video. Use the Diagram tab instead.
+            </video>
+          )}
+        </div>
+      )}
     </figure>
   );
 }

@@ -131,7 +131,7 @@ export default async function BlogPost({ params }: Props) {
                   </p>
                 );
               case "diagram":
-                return <FlowDiagram key={i} title={b.title} caption={b.caption} lanes={b.lanes} />;
+                return <FlowDiagram key={i} title={b.title} caption={b.caption} lanes={b.lanes} video={post.video} />;
             }
           })}
         </div>

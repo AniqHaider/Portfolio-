@@ -3,6 +3,9 @@ export type Tone = "yellow" | "blue" | "green" | "pink" | "purple" | "gray";
 export type FlowNode = { label: string; sub?: string; tone?: Tone };
 export type FlowLane = { title?: string; note?: string; nodes: FlowNode[] };
 
+/** An animated explainer for the post's diagram, played from /public. */
+export type PostVideo = { src: string; poster: string; label: string };
+
 export type Block =
   | { t: "p"; text: string }
   | { t: "h"; text: string }
@@ -19,12 +22,15 @@ export type Post = {
   readTime: string;
   stack: string[];
   links?: { label: string; href: string }[];
+  /** Optional animated version of the diagram; adds an Animation tab next to it. */
+  video?: PostVideo;
   blocks: Block[];
 };
 
 export const posts: Post[] = [
   {
     slug: "cardify",
+    video: { src: "/videos/cardify.mp4", poster: "/videos/cardify.jpg", label: "Animated walkthrough of how Cardify replaces a storefront's product cards" },
     date: "2026-10-13",
     title: "Cardify: restyling a storefront's product cards without touching its code",
     summary:
@@ -95,6 +101,7 @@ export const posts: Post[] = [
   },
   {
     slug: "agent-cloning-pipeline",
+    video: { src: "/videos/agent-cloning-pipeline.mp4", poster: "/videos/agent-cloning-pipeline.jpg", label: "Animated walkthrough of how the multi-agent pipeline clones a page section by section" },
     date: "2026-10-13",
     title: "A multi-agent pipeline that clones live sites into production components",
     summary:
@@ -165,6 +172,7 @@ export const posts: Post[] = [
   },
   {
     slug: "github-repo-mcp",
+    video: { src: "/videos/github-repo-mcp.mp4", poster: "/videos/github-repo-mcp.jpg", label: "Animated walkthrough of how github-repo-mcp lets an AI explore a repository" },
     date: "2026-10-13",
     title: "github-repo-mcp: letting an AI explore any GitHub repo without cloning it by hand",
     summary:
@@ -226,6 +234,7 @@ export const posts: Post[] = [
   },
   {
     slug: "editor-update-system",
+    video: { src: "/videos/editor-update-system.mp4", poster: "/videos/editor-update-system.jpg", label: "Animated walkthrough of the approval-gated editor update workflow" },
     date: "2026-10-13",
     title: "An editor update system with a human approval gate on every write",
     summary:
