@@ -49,6 +49,15 @@ const personJsonLd = {
   knowsAbout: ["React", "Next.js", "Node.js", "Python", "AWS", "Developer tooling"],
 };
 
+// WebSite structured data: this is what Google reads for the "site name" shown above a result, so it shows the name instead of the host's.
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: profile.name,
+  alternateName: [`${profile.name} Portfolio`, "Aniq Haider"],
+  url: `${siteUrl}/`,
+};
+
 const themeScript = `(function(){try{var t=localStorage.getItem("theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:m)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();`;
 
 export default function RootLayout({
@@ -63,6 +72,10 @@ export default function RootLayout({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
         {children}
       </body>
