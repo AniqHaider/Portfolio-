@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useId, useRef, useState } from "react";
+import { Fragment, useEffect, useId, useRef, useState } from "react";
 import type { FlowLane, PostVideo, Tone } from "@/lib/posts";
 
 // FigJam-style sticky-note palette. Pastel backgrounds with dark text stay legible in both themes.
@@ -37,7 +37,8 @@ export default function FlowDiagram({
   video?: PostVideo;
 }) {
   const id = useId();
-  const [view, setView] = useState<View>("diagram");
+  // A post with an animation opens on it; the diagram is one tab away (and stays in the page for search engines).
+  const [view, setView] = useState<View>(video ? "animation" : "diagram");
   const videoRef = useRef<HTMLVideoElement>(null);
   const tabs: { id: View; label: string }[] = video
     ? [
@@ -45,6 +46,18 @@ export default function FlowDiagram({
         { id: "animation", label: "Animation" },
       ]
     : [];
+
+  // The video plays only while it is on screen, so it does not run unseen further down the page.
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || view !== "animation") return;
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) void el.play().catch(() => {});
+      else el.pause();
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [view]);
 
   const choose = (next: View) => {
     setView(next);
@@ -153,7 +166,6 @@ export default function FlowDiagram({
               controls
               playsInline
               muted
-              autoPlay
               loop
               preload="metadata"
               aria-label={video.label}
