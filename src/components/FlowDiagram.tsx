@@ -40,6 +40,8 @@ export default function FlowDiagram({
   // A post with an animation opens on it; the diagram is one tab away (and stays in the page for search engines).
   const [view, setView] = useState<View>(video ? "animation" : "diagram");
   const videoRef = useRef<HTMLVideoElement>(null);
+  // Browsers only autoplay muted video, so it starts silent; the Sound button (or the player's own volume control) turns the lofi track on.
+  const [muted, setMuted] = useState(true);
   const tabs: { id: View; label: string }[] = video
     ? [
         { id: "diagram", label: "Diagram" },
@@ -157,21 +159,37 @@ export default function FlowDiagram({
         >
           {/* The file is only requested once the Animation tab is opened. */}
           {view === "animation" && (
-            <video
-              ref={videoRef}
-              data-testid="flow-video"
-              className="aspect-video w-full rounded-2xl border border-line bg-black"
-              src={video.src}
-              poster={video.poster}
-              controls
-              playsInline
-              muted
-              loop
-              preload="metadata"
-              aria-label={video.label}
-            >
-              Your browser can't play this video. Use the Diagram tab instead.
-            </video>
+            <div className="relative">
+              <video
+                ref={videoRef}
+                data-testid="flow-video"
+                className="aspect-video w-full rounded-2xl border border-line bg-black"
+                src={video.src}
+                poster={video.poster}
+                controls
+                playsInline
+                muted={muted}
+                onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
+                loop
+                preload="metadata"
+                aria-label={video.label}
+              >
+                Your browser can't play this video. Use the Diagram tab instead.
+              </video>
+              <button
+                type="button"
+                data-testid="flow-sound"
+                aria-pressed={!muted}
+                onClick={() => setMuted((m) => !m)}
+                className="absolute right-3 top-3 inline-flex min-h-10 items-center gap-2 rounded-full bg-black/70 px-4 text-sm font-semibold text-white backdrop-blur hover:bg-black/85"
+              >
+                <svg aria-hidden className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M11 5 6 9H3v6h3l5 4z" />
+                  {muted ? <path d="m16 9 5 6m0-6-5 6" /> : <path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12" />}
+                </svg>
+                {muted ? "Sound on" : "Sound off"}
+              </button>
+            </div>
           )}
         </div>
       )}
