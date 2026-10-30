@@ -29,6 +29,84 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    slug: "jira-task",
+    video: { src: "/videos/jira-task.mp4", poster: "/videos/jira-task.jpg", label: "Animated walkthrough of how /jira-task takes a ticket from Jira to a reviewed pull request" },
+    date: "2026-10-30",
+    title: "jira-task: taking a Jira ticket all the way to a reviewed pull request",
+    summary:
+      "A Claude Code skill that reads a ticket through a Jira MCP server, implements and verifies the change in a real browser, and raises a pull request, with a human gate at the plan, the diff and the PR.",
+    tag: "Developer tooling",
+    readTime: "5 min read",
+    stack: ["Claude Code", "MCP", "Jira", "Playwright", "GitHub CLI"],
+    blocks: [
+      {
+        t: "p",
+        text: "Most frontend tickets follow the same path: read the ticket, cut a branch, make the change, check it in a browser, get a review, open a pull request, and move the ticket along. The path is repetitive enough to automate and risky enough that I did not want to automate it blindly. So I wrote /jira-task, a Claude Code skill that runs the whole cycle from one command and stops for a person at the moments that matter.",
+      },
+      {
+        t: "p",
+        text: "It talks to Jira through an MCP server (the open-source mcp-atlassian), so the agent can read a ticket's description, comments and attached images, and later comment on it and change its status. The skill is the workflow built on top of that access.",
+      },
+      {
+        t: "diagram",
+        title: "From ticket to pull request",
+        caption: "Eight phases, three human gates. Verification and review sit before anything is pushed.",
+        lanes: [
+          {
+            title: "Understand",
+            nodes: [
+              { label: "Read the ticket", sub: "Description, comments, screenshots and design links via the Jira MCP", tone: "yellow" },
+              { label: "Classify and score", sub: "UI fix, new UI, API integration or config flag, then a confidence rating", tone: "blue" },
+              { label: "Gate 1: the plan", sub: "Low confidence stops here and asks questions", tone: "pink" },
+            ],
+          },
+          {
+            title: "Build and prove",
+            nodes: [
+              { label: "Branch", sub: "Cut from the base branch with a name taken from the ticket", tone: "gray" },
+              { label: "Implement", sub: "Only what the ticket asks for", tone: "blue" },
+              { label: "Verify", sub: "Build, lint and typecheck, then Playwright drives the change", tone: "green" },
+              { label: "Independent review", sub: "A fresh reviewer agent reads the diff", tone: "purple" },
+            ],
+          },
+          {
+            title: "Ship",
+            nodes: [
+              { label: "Gate 2: the diff", sub: "Diff, screenshots and verification notes", tone: "pink" },
+              { label: "Commit and push", sub: "One logical commit, never a force-push", tone: "gray" },
+              { label: "Gate 3: the PR", sub: "Confirm, then open it ready for review", tone: "pink" },
+              { label: "Close the loop", sub: "Comment the link on the ticket and move it to In Review", tone: "yellow" },
+            ],
+          },
+        ],
+      },
+      { t: "h", text: "How it decides what to do" },
+      {
+        t: "ul",
+        items: [
+          "The ticket is classified first, because the task type picks the verification path: a UI change is rendered and screenshotted, an API change is exercised while the network calls are inspected, and a config flag is checked on and off.",
+          "A confidence rating comes from what can actually be verified: explicit acceptance criteria, a visual reference, named endpoints, a reproducible problem. Low confidence halts before any code is written. Medium proceeds, with every assumption listed at the gate and again in the PR.",
+          "A scope guard keeps the diff honest. Tempting refactors are written into the PR as suggested follow-ups instead of being slipped into the change.",
+        ],
+      },
+      { t: "h", text: "Guardrails" },
+      {
+        t: "ul",
+        items: [
+          "It will not start on a dirty working tree, and it never stashes someone's uncommitted work.",
+          "Secrets and environment files are never committed or printed.",
+          "If verification cannot confirm something, it says so rather than claiming success.",
+          "Each run keeps a log, the plan, the confidence breakdown, screenshots and review notes, so an interrupted run resumes from the last clean phase.",
+          "It raises the pull request for a human to review and never merges it.",
+        ],
+      },
+      {
+        t: "callout",
+        text: "The point is not to remove the person from the loop. It is to spend their attention on the three decisions that need judgment and let the agent handle the bookkeeping around them.",
+      },
+    ],
+  },
+  {
     slug: "cardify",
     video: { src: "/videos/cardify.mp4", poster: "/videos/cardify.jpg", label: "Animated walkthrough of how Cardify replaces a storefront's product cards" },
     date: "2026-10-13",
@@ -288,5 +366,9 @@ export const posts: Post[] = [
     ],
   },
 ];
+
+/** "2026-10-13" -> "13 Oct 2026" (UTC, so the day never shifts with the viewer's timezone). */
+export const formatPostDate = (iso: string) =>
+  new Date(iso).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 
 export const getPost = (slug: string) => posts.find((p) => p.slug === slug);

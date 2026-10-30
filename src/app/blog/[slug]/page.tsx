@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import FlowDiagram from "@/components/FlowDiagram";
 import Nav from "@/components/Nav";
-import { getPost, posts } from "@/lib/posts";
+import { formatPostDate, getPost, posts } from "@/lib/posts";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -71,7 +71,10 @@ export default async function BlogPost({ params }: Props) {
       <article>
         <header className="mb-10 max-w-3xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
-            {post.tag} · {post.readTime}
+            {post.tag} · {post.readTime} ·{" "}
+            <time dateTime={post.date} className="font-medium normal-case tracking-normal text-muted">
+              {formatPostDate(post.date)}
+            </time>
           </p>
           <h1 className="text-balance text-[clamp(1.9rem,4.5vw,3rem)] font-semibold leading-tight tracking-tight">
             {post.title}

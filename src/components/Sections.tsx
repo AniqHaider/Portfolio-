@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Reveal from "./Reveal";
-import { posts } from "@/lib/posts";
+import { formatPostDate, posts } from "@/lib/posts";
 import { education, experience, profile, skills, stats } from "@/lib/data";
 
 function Shell({
@@ -122,6 +122,9 @@ export function Writing() {
               <span className="mb-4 w-fit rounded-full bg-accent-soft px-3 py-1 text-xs font-semibold text-accent">
                 {p.tag}
               </span>
+              <time dateTime={p.date} className="mb-2 block text-xs text-muted">
+                {formatPostDate(p.date)}
+              </time>
               <h3 className="text-xl font-semibold leading-snug tracking-tight">{p.title}</h3>
               <p className="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">{p.summary}</p>
               <div className="mt-5 flex flex-wrap gap-1.5">
