@@ -1,9 +1,12 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { readRetroCount, setView, useView } from "@/lib/view";
 
 const NUDGE_KEY = "viewNudge";
+const NOTE_KEY = "appNudge";
+const APP_URL = "https://github.com/AniqHaider/prep-pocket/releases/latest";
 const CONFETTI = ["#ff0", "#f0f", "#0ff", "#21ed00", "#f22", "#00e"];
 
 const ticker = [
@@ -69,6 +72,9 @@ export function RetroDock() {
   const retro = view === "retro";
   const [menu, setMenu] = useState(false);
   const [nudge, setNudge] = useState(false);
+  const [note, setNote] = useState(false);
+  const [asked, setAsked] = useState(false);
+  const path = usePathname();
   const [clock, setClock] = useState("");
   const prev = useRef(view);
 
@@ -80,13 +86,43 @@ export function RetroDock() {
     try {
       seen = !!localStorage.getItem(NUDGE_KEY);
     } catch {}
-    if (seen) return;
+    if (seen) {
+      setAsked(true);
+      return;
+    }
     const t = setTimeout(() => setNudge(true), 6000);
     return () => clearTimeout(t);
   }, [retro]);
 
+  // The note about the app waits until the view prompt has been answered, so only one popup shows at a time.
+  useEffect(() => {
+    if (!asked && !retro) return;
+    let seen = path.startsWith("/blog/preppy");
+    try {
+      seen = seen || !!localStorage.getItem(NOTE_KEY);
+    } catch {}
+    if (seen) return;
+    const t = setTimeout(() => setNote(true), 6500);
+    return () => clearTimeout(t);
+  }, [asked, retro, path]);
+
+  const closeNote = () => {
+    setNote(false);
+    try {
+      localStorage.setItem(NOTE_KEY, "dismissed");
+    } catch {}
+  };
+
+  useEffect(() => {
+    if (!note) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && closeNote();
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [note]);
+
   const dismiss = () => {
     setNudge(false);
+    setAsked(true);
     try {
       localStorage.setItem(NUDGE_KEY, "dismissed");
     } catch {}
@@ -126,8 +162,52 @@ export function RetroDock() {
     };
   }, [menu]);
 
+  const noteEl = note ? (
+    <aside
+      aria-label="A note for fellow developers"
+      data-testid="app-note"
+      className="view-nudge fixed inset-x-4 bottom-4 z-[60] rounded-2xl border border-line bg-surface p-4 shadow-2xl sm:left-auto sm:right-6 sm:bottom-6 sm:w-[25rem]"
+    >
+      <p className="text-xs font-semibold uppercase tracking-[0.18em] text-accent">A note for fellow devs</p>
+      <p className="mt-2 text-sm font-semibold">I built a free, offline app for interview prep.</p>
+      <p className="mt-1 text-sm text-muted">
+        Preppy puts notes, animated lessons, quizzes and real code on your Android phone. If you are brushing up too, it might help you.
+      </p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <a
+          href="/blog/preppy"
+          onClick={closeNote}
+          data-testid="note-learn"
+          className="inline-flex h-10 items-center rounded-full bg-accent-fill px-4 text-sm font-semibold text-white transition hover:brightness-110"
+        >
+          See how it works
+        </a>
+        <a
+          href={APP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={closeNote}
+          data-testid="note-apk"
+          className="inline-flex h-10 items-center rounded-full border border-line bg-surface-2 px-4 text-sm font-semibold transition hover:border-accent"
+        >
+          Get the APK
+        </a>
+        <button
+          type="button"
+          onClick={closeNote}
+          data-testid="note-dismiss"
+          className="inline-flex h-10 items-center rounded-full px-3 text-sm font-semibold text-muted transition hover:text-fg"
+        >
+          Not now
+        </button>
+      </div>
+    </aside>
+  ) : null;
+
   if (retro) {
     return (
+      <>
+      {noteEl}
       <nav className="retro-taskbar" aria-label="Taskbar" data-testid="retro-taskbar">
         <div className="retro-start-wrap">
           <button
@@ -175,10 +255,11 @@ export function RetroDock() {
           {clock && <time className="retro-clock">{clock}</time>}
         </div>
       </nav>
+      </>
     );
   }
 
-  if (!nudge) return null;
+  if (!nudge) return noteEl;
   return (
     <aside
       aria-label="Try the edgy view"
