@@ -29,6 +29,86 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    slug: "preppy",
+    video: { src: "/videos/preppy.mp4", poster: "/videos/preppy.jpg", label: "A 100-second tour of Preppy, the offline study app for software engineers" },
+    date: "2026-10-31",
+    title: "Preppy: an offline study app that fits a whole interview-prep course in your pocket",
+    summary:
+      "An Android app that bundles notes, animated lessons, quizzes, graded coding exercises and an optional on-device AI helper, with no account and no network needed.",
+    tag: "Mobile app",
+    readTime: "6 min read",
+    stack: ["Svelte 5", "TypeScript", "Capacitor", "Pyodide", "PGlite", "llama.cpp"],
+    links: [
+      { label: "Download the APK", href: "https://github.com/AniqHaider/prep-pocket/releases/latest" },
+      { label: "Source on GitHub", href: "https://github.com/AniqHaider/prep-pocket" },
+    ],
+    blocks: [
+      {
+        t: "p",
+        text: "Preparing for software interviews usually means juggling notes, videos, quiz sites, a code editor and an AI chat, often on a patchy connection during a commute. I wanted all of it in one place that works with the network off, so I built Preppy: an Android app that carries a full prep course in your pocket.",
+      },
+      {
+        t: "diagram",
+        title: "What is inside",
+        caption: "Twelve subject sections plus a Backend lab and coding drills, all running on the phone.",
+        lanes: [
+          {
+            title: "Learn",
+            nodes: [
+              { label: "Home", sub: "Streak, XP, solved count and a Continue card", tone: "yellow" },
+              { label: "12 subjects, 192 topics", sub: "Computer science, AI, Python for AI, AWS, JavaScript, TypeScript, React, Next.js, three databases and interview prep", tone: "blue" },
+              { label: "Animated lessons", sub: "300+ step-by-step scenes with play, pause, speed and read-aloud", tone: "green" },
+            ],
+          },
+          {
+            title: "Practice",
+            nodes: [
+              { label: "Quizzes", sub: "1,500+ questions from basic to advanced, each with an explanation", tone: "pink" },
+              { label: "Backend lab", sub: "12 chapters and 147 Python and SQL exercises, graded on the phone", tone: "purple" },
+              { label: "Drills", sub: "21 JavaScript and TypeScript problems, run against tests", tone: "gray" },
+            ],
+          },
+          {
+            title: "Help",
+            nodes: [
+              { label: "Assistant", sub: "Knows which question, topic or drill you are looking at", tone: "yellow" },
+              { label: "Optional on-device model", sub: "A small open model runs on the phone through llama.cpp", tone: "blue" },
+              { label: "Narration voices", sub: "Optional natural voices for read-aloud, downloaded once", tone: "green" },
+            ],
+          },
+        ],
+      },
+      { t: "h", text: "How it works offline" },
+      {
+        t: "ul",
+        items: [
+          "Python runs in Pyodide, which is CPython compiled to WebAssembly. SQL runs on PGlite, a real Postgres in WebAssembly, and MongoDB queries run on a JavaScript query engine. The grading, XP and streak rules are a port of my earlier web version, now running on the device.",
+          "The app itself is Svelte 5 and TypeScript, packaged with Capacitor. Native code is limited to the bridges for the on-device language model and the narration voices.",
+          "Progress is stored on the phone. Settings can export it or reset it, and there is no account to create.",
+        ],
+      },
+      { t: "h", text: "Details I cared about" },
+      {
+        t: "ul",
+        items: [
+          "A code keyboard built into the app, with brackets, Tab and arrow keys one tap away, because typing code on a phone keyboard is slow.",
+          "A Back button that behaves: it closes whatever is open, then returns to a section's start, then to Home, and only then asks whether to quit.",
+          "A calm look I call Midnight gold: near-black pages, cream text, thin gold lines and a classical serif for titles. Colour has jobs: gold marks actions and progress, green means correct, red means wrong.",
+          "An assistant that is honest about its limits. Small on-device models make mistakes, so the app presents their answers as hints.",
+        ],
+      },
+      { t: "h", text: "Installing it" },
+      {
+        t: "p",
+        text: "Preppy is distributed as an APK on GitHub releases: about 50 MB, arm64, for Android 13 or newer. It is debug-signed, so Play Protect may warn about an unknown developer, which is expected for a self-built app. Updates install over the previous version and keep your progress as long as the signing key stays the same.",
+      },
+      {
+        t: "callout",
+        text: "One app, no account, no network: open it anywhere and keep the streak going.",
+      },
+    ],
+  },
+  {
     slug: "jira-task",
     video: { src: "/videos/jira-task.mp4", poster: "/videos/jira-task.jpg", label: "Animated walkthrough of how /jira-task takes a ticket from Jira to a reviewed pull request" },
     date: "2026-10-30",
