@@ -60,3 +60,16 @@ body {
     scroll-behavior: auto;
   }
 }
+
+@keyframes nudge-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .view-nudge {
+    animation: nudge-in 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}

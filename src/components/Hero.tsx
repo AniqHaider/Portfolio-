@@ -14,7 +14,7 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="relative mb-12 h-[min(30svh,58vw)] min-h-[200px] w-[min(30svh,58vw)] min-w-[200px]"
+        className="retro-portrait relative mb-12 h-[min(30svh,58vw)] min-h-[200px] w-[min(30svh,58vw)] min-w-[200px]"
         aria-hidden
       >
         {/* stacked rings */}

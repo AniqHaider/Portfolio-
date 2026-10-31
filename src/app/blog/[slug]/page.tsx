@@ -70,7 +70,7 @@ export default async function BlogPost({ params }: Props) {
       </Link>
       <article>
         <header className="mb-10 max-w-3xl">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+          <p className="retro-eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             {post.tag} · {post.readTime} ·{" "}
             <time dateTime={post.date} className="font-medium normal-case tracking-normal text-muted">
               {formatPostDate(post.date)}

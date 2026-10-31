@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { setView, useView } from "@/lib/view";
 
 const links = [
   { href: "/#experience", label: "Experience" },
@@ -10,6 +11,7 @@ const links = [
 
 export default function Nav() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const retro = useView() === "retro";
 
   useEffect(() => {
     const t = document.documentElement.getAttribute("data-theme");
@@ -60,6 +62,23 @@ export default function Nav() {
           </a>
         </div>
       </nav>
+      <button
+        type="button"
+        onClick={() => setView(retro ? "modern" : "retro")}
+        aria-pressed={retro}
+        aria-label={retro ? "Back to normal view" : "Switch to the edgy retro view"}
+        title={retro ? "Back to normal view" : "Try the edgy view"}
+        data-testid="view-toggle"
+        className="retro-viewbtn grid h-14 w-14 shrink-0 place-items-center rounded-full border border-line bg-surface/80 text-accent backdrop-blur-xl transition hover:border-accent sm:h-[70px] sm:w-[70px]"
+      >
+        {retro ? (
+          <span>↩ Normal view</span>
+        ) : (
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12 2l2.9 6.6 7.1.7-5.3 4.8 1.5 7-6.2-3.6-6.2 3.6 1.5-7L2 9.3l7.1-.7z" />
+          </svg>
+        )}
+      </button>
       <button
         type="button"
         onClick={toggle}

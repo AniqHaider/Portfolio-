@@ -17,7 +17,7 @@ function Shell({
   return (
     <section id={id} className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 py-24 md:px-10">
       <Reveal>
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
+        <p className="retro-eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">{eyebrow}</p>
         <h2 className="mb-12 max-w-3xl text-balance text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
           {title}
         </h2>
@@ -194,7 +194,7 @@ export function Contact() {
     <section id="contact" className="mx-auto w-full max-w-6xl scroll-mt-28 px-6 pb-28 pt-12 md:px-10">
       <Reveal>
         <div className="rounded-[2.5rem] border border-line bg-surface p-10 text-center md:p-16">
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">Contact</p>
+          <p className="retro-eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">Contact</p>
           <h2 className="mx-auto max-w-2xl text-balance text-[clamp(1.75rem,4vw,3rem)] font-semibold leading-tight tracking-tight">
             Let&apos;s build something that scales.
           </h2>
