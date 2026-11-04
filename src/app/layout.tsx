@@ -1,23 +1,20 @@
 import type { Metadata } from "next";
-import { Comic_Neue, Figtree } from "next/font/google";
+import { Figtree, Fraunces } from "next/font/google";
 import "./globals.css";
-import "./retro.css";
 import { profile } from "@/lib/data";
-import { RetroDock, RetroTop } from "@/components/RetroView";
 
 const figtree = Figtree({
   variable: "--font-figtree",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-// Fallback for the retro view on devices without Comic Sans; only downloaded when that view is used.
-const comic = Comic_Neue({
-  variable: "--font-comic",
+// Editorial display face — variable serif, light weights carry the ondo-style calm.
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["400", "700"],
   style: ["normal", "italic"],
-  preload: false,
+  axes: ["SOFT", "opsz"],
 });
 
 export const metadata: Metadata = {
@@ -69,13 +66,14 @@ const websiteJsonLd = {
   url: `${siteUrl}/`,
 };
 
-const themeScript = `(function(){try{var t=localStorage.getItem("theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: light)").matches?"light":"dark";document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:m);if(localStorage.getItem("view")==="retro")document.documentElement.setAttribute("data-view","retro")}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();`;
+// Resolve the theme before first paint: stored choice wins, else system, else the editorial light default.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");var m=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t==="light"||t==="dark"?t:m)}catch(e){document.documentElement.setAttribute("data-theme","dark")}})();`;
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-theme="dark" data-view="modern" suppressHydrationWarning className={`${figtree.variable} ${comic.variable}`}>
+    <html lang="en" data-theme="dark" suppressHydrationWarning className={`${figtree.variable} ${fraunces.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
@@ -88,9 +86,7 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
-        <RetroTop />
         {children}
-        <RetroDock />
       </body>
     </html>
   );

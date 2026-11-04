@@ -14,7 +14,7 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.92 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-        className="retro-portrait relative mb-12 h-[min(30svh,58vw)] min-h-[200px] w-[min(30svh,58vw)] min-w-[200px]"
+        className="relative mb-12 h-[min(30svh,58vw)] min-h-[200px] w-[min(30svh,58vw)] min-w-[200px]"
         aria-hidden
       >
         {/* stacked rings */}
@@ -23,12 +23,12 @@ export default function Hero() {
         <span className="absolute inset-0 rounded-full border border-line bg-surface-2 p-3 shadow-2xl">
           <span className="relative block h-full w-full overflow-hidden rounded-full bg-surface">
             <Image
-              src="/portrait.jpg"
+              src="/portrait-studio.jpg"
               alt="Portrait of Aniq Haider"
               fill
               priority
               sizes="(max-width: 767px) 58vw, 30svh"
-              className="object-cover"
+              className="object-cover object-[center_20%]"
             />
           </span>
         </span>
