@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import FlowDiagram from "@/components/FlowDiagram";
-import Nav from "@/components/Nav";
+import Nav from "@/components/classic/Nav";
 import { formatPostDate, getPost, posts } from "@/lib/posts";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -54,12 +54,12 @@ export default async function BlogPost({ params }: Props) {
   };
 
   return (
-    <>
+    <div className="site-classic">
     <script
       type="application/ld+json"
       dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
     />
-    <Nav />
+    <Nav home={false} />
     <main id="main" className="mx-auto w-full max-w-4xl px-6 pb-24 pt-32 md:px-8">
       <Link
         href="/#writing"
@@ -70,7 +70,7 @@ export default async function BlogPost({ params }: Props) {
       </Link>
       <article>
         <header className="mb-10 max-w-3xl">
-          <p className="retro-eyebrow mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.2em] text-accent">
             {post.tag} · {post.readTime} ·{" "}
             <time dateTime={post.date} className="font-medium normal-case tracking-normal text-muted">
               {formatPostDate(post.date)}
@@ -147,6 +147,6 @@ export default async function BlogPost({ params }: Props) {
         </Link>
       </nav>
     </main>
-    </>
+    </div>
   );
 }
